@@ -64,6 +64,26 @@ void setupEthernet()
   Serial.println(Ethernet.localIP());
 }
 
+void openDoor()
+{
+  digitalWrite(ledVerde, HIGH);
+
+  servo.write(90);
+  delay(5000);
+  servo.write(0);
+
+  digitalWrite(ledVerde, LOW);
+}
+
+void closeDoor()
+{
+  digitalWrite(ledVermelho, HIGH);
+
+  delay(5000);
+
+  digitalWrite(ledVermelho, LOW);
+}
+
 void handleRfid()
 {
   // Look for new cards
@@ -97,23 +117,13 @@ void handleRfid()
     Serial.println("Authorized access");
     Serial.println();
 
-    digitalWrite(ledVerde, HIGH);
-
-    servo.write(90);
-    delay(5000);
-    servo.write(0);
-
-    digitalWrite(ledVerde, LOW);
+    openDoor();
   }
 
   else   {
     Serial.println(" Access denied");
 
-    digitalWrite(ledVermelho, HIGH);
-
-    delay(5000);
-
-    digitalWrite(ledVermelho, LOW);
+    closeDoor();
   }
 }
 
@@ -132,32 +142,6 @@ void handleEthernet()
         // if you've gotten to the end of the line (received a newline
         // character) and the line is blank, the http request has ended,
         // so you can send a reply
-        if (c == '\n' && currentLineIsBlank) {
-          // send a standard http response header
-          client.println("HTTP/1.1 200 OK");
-          client.println("Content-Type: text/html");
-          client.println("Connection: close");  // the connection will be closed after completion of the response
-          client.println("Refresh: 5");  // refresh the page automatically every 5 sec
-          client.println();
-          client.println("<!DOCTYPE HTML>");
-          client.println("<html>");
-          // output the value of each analog input pin
-          for (int analogChannel = 0; analogChannel < 6; analogChannel++) {
-            int sensorReading = analogRead(analogChannel);
-            client.print("analog input ");
-            client.print(analogChannel);
-            client.print(" is ");
-            client.print(sensorReading);
-            client.println("<br />");
-          }
-          client.println("</html>");
-          break;
-        }
-        if (c == 'a') {
-          servo.write(90);
-          delay(5000);
-          servo.write(0);
-        }
         if (c == '\n') {
           // you're starting a new line
           currentLineIsBlank = true;
@@ -165,6 +149,24 @@ void handleEthernet()
           // you've gotten a character on the current line
           currentLineIsBlank = false;
         }
+        
+        if (c == '\n' && currentLineIsBlank) {
+          // send a standard http response header
+          client.println("HTTP/1.1 200 OK");
+          client.println("Content-Type: text/html");
+          client.println("Connection: close");  // the connection will be closed after completion of the response
+          //client.println("Refresh: 5");  // refresh the page automatically every 5 sec
+          client.println();
+          client.println("<!DOCTYPE HTML>");
+          client.println("<html>");
+          client.println("</html>");
+          break;
+        }
+
+        else if (c == 'b') {
+          openDoor();
+        }
+        
       }
     }
     // give the web browser time to receive the data
