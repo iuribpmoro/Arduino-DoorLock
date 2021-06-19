@@ -20,7 +20,7 @@ Servo servo;
 byte mac[] = {
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
 };
-IPAddress ip(10, 0, 0, 20);
+IPAddress ip(192, 168, 12, 237);
 
 // Initialize the Ethernet server library
 // with the IP address and port you want to use
@@ -152,18 +152,28 @@ void handleEthernet()
         
         if (c == '\n' && currentLineIsBlank) {
           // send a standard http response header
-          client.println("HTTP/1.1 200 OK");
-          client.println("Content-Type: text/html");
-          client.println("Connection: close");  // the connection will be closed after completion of the response
+          client.println("HTTP/1.1 404 Page not Found");
+          //client.println("Content-Type: text/html");
+          //client.println("Connection: close");  // the connection will be closed after completion of the response
           //client.println("Refresh: 5");  // refresh the page automatically every 5 sec
-          client.println();
-          client.println("<!DOCTYPE HTML>");
-          client.println("<html>");
-          client.println("</html>");
+          //client.println();
+          //client.println("<!DOCTYPE HTML>");
+          //client.println("<html>");
+          //client.println("</html>");
           break;
         }
 
         else if (c == 'b') {
+          client.println("HTTP/1.1 200 OK");
+          client.println("Content-Type: text/html");
+          client.println("Connection: close");  // the connection will be closed after completion of the response
+          client.println("Refresh: 5");  // refresh the page automatically every 5 sec
+          client.println();
+          client.println("<!DOCTYPE HTML>");
+          client.println("<html>");
+          client.println("<h1>Porta Aberta</h1>");
+          client.println("</html>");
+          
           openDoor();
         }
         
