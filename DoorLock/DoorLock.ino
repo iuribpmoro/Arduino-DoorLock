@@ -20,6 +20,7 @@ Servo servo;
 byte mac[] = {
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
 };
+
 IPAddress ip(192, 168, 12, 237);
 
 // Initialize the Ethernet server library
@@ -84,47 +85,89 @@ void closeDoor()
   digitalWrite(ledVermelho, LOW);
 }
 
-void handleRfid()
+void readRfid()
 {
-  // Look for new cards
-  if ( ! mfrc522.PICC_IsNewCardPresent())
-  {
+  byte buffer2[18];
+  byte block = 1;
+  
+  // Prepare key - all keys are set to FFFFFFFFFFFFh at chip delivery from the factory.
+  MFRC522::MIFARE_Key key;
+  for (byte i = 0; i < 6; i++) key.keyByte[i] = 0xFF;
+
+  //some variables we need
+  
+  byte len;
+  MFRC522::StatusCode status;
+
+  //-------------------------------------------
+
+  // Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
+  if ( ! mfrc522.PICC_IsNewCardPresent()) {
     return;
   }
+
   // Select one of the cards
-  if ( ! mfrc522.PICC_ReadCardSerial())
-  {
+  if ( ! mfrc522.PICC_ReadCardSerial()) {
     return;
   }
-  //Show UID on serial monitor
-  Serial.print("UID tag :");
-  String content = "";
-  byte letter;
-  for (byte i = 0; i < mfrc522.uid.size; i++)
-  {
-    Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
-    Serial.print(mfrc522.uid.uidByte[i], HEX);
-    content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
-    content.concat(String(mfrc522.uid.uidByte[i], HEX));
+
+  Serial.println(F("**Card Detected:**"));
+
+  //-------------------------------------------
+
+  mfrc522.PICC_DumpDetailsToSerial(&(mfrc522.uid)); //dump some details about the card
+
+  //mfrc522.PICC_DumpToSerial(&(mfrc522.uid));      //uncomment this to see all blocks in hex
+
+  //-------------------------------------------
+
+  Serial.print(F("Password: "));
+
+  //---------------------------------------- GET LAST NAME
+
+  status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, 1, &key, &(mfrc522.uid)); //line 834
+  if (status != MFRC522::STATUS_OK) {
+    Serial.print(F("Authentication failed: "));
+    Serial.println(mfrc522.GetStatusCodeName(status));
+    return;
   }
 
-  Serial.println();
-  Serial.print("Message : ");
+  status = mfrc522.MIFARE_Read(block, buffer2, &len);
+  if (status != MFRC522::STATUS_OK) {
+    Serial.print(F("Reading failed: "));
+    Serial.println(mfrc522.GetStatusCodeName(status));
+    return;
+  }
 
-  content.toUpperCase();
-  if (content.substring(1) == "A9 7F 20 3B") //change here the UID of the card/cards that you want to give access
-  {
-    Serial.println("Authorized access");
-    Serial.println();
+  char truePassword[16] = {'Q','J','2','A','5','x','9',' ',' ',' ',' ',' ',' ',' ',' ',' '};
 
+  int verify = 1;
+
+  //PRINT LAST NAME
+  for (uint8_t i = 0; i < 16; i++) {
+    Serial.write(buffer2[i] );
+    
+    if (buffer2[i] != truePassword[i]) {
+      closeDoor();
+      verify = 0;
+      
+      break;
+    }
+  }
+
+  if (verify == 1) {
     openDoor();
   }
 
-  else   {
-    Serial.println(" Access denied");
 
-    closeDoor();
-  }
+  //----------------------------------------
+
+  Serial.println(F("\n**End Reading**\n"));
+
+  delay(1000); //change value if you want to read cards faster
+
+  mfrc522.PICC_HaltA();
+  mfrc522.PCD_StopCrypto1();
 }
 
 void handleEthernet()
@@ -153,13 +196,6 @@ void handleEthernet()
         if (c == '\n' && currentLineIsBlank) {
           // send a standard http response header
           client.println("HTTP/1.1 404 Page not Found");
-          //client.println("Content-Type: text/html");
-          //client.println("Connection: close");  // the connection will be closed after completion of the response
-          //client.println("Refresh: 5");  // refresh the page automatically every 5 sec
-          //client.println();
-          //client.println("<!DOCTYPE HTML>");
-          //client.println("<html>");
-          //client.println("</html>");
           break;
         }
 
@@ -212,9 +248,7 @@ void setup()
 void loop()
 {
 
-  //Serial.println("Chegou aqui!");
-
-  handleRfid();
+  readRfid();
 
   handleEthernet();
   
