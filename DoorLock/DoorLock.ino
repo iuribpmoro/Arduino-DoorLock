@@ -9,8 +9,11 @@
 #define ledVerde 2
 #define ledVermelho 3
 #define servoPin 4
+#define hallSensorPin 5
 
 #define DEBUG true
+
+int hallSensorValue = 0;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance.
 Servo servo;
@@ -68,11 +71,17 @@ void setupEthernet()
 void openDoor()
 {
   digitalWrite(ledVerde, HIGH);
-
   servo.write(90);
   delay(5000);
-  servo.write(0);
 
+  // while the magnetic field is not detected (hall state HIGH)
+  // it means the door is still open
+  // so it can't lock (servo state 0)
+  do {
+    hallSensorValue = digitalRead(hallSensorPin)
+  } while (hallSensorValue == HIGH)
+
+  servo.write(0);
   digitalWrite(ledVerde, LOW);
 }
 
@@ -227,6 +236,7 @@ void setup()
 {
   pinMode(ledVermelho, OUTPUT);
   pinMode(ledVerde, OUTPUT);
+  pinMode(hallSensorPin,INPUT);
 
   Serial.begin(9600);   // Initiate a serial communication
 
