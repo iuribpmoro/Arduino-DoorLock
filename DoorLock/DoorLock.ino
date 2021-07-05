@@ -24,7 +24,7 @@ byte mac[] = {
   0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
 };
 
-IPAddress ip(192, 168, 12, 237);
+IPAddress ip(192, 168, 15, 237);
 
 // Initialize the Ethernet server library
 // with the IP address and port you want to use
@@ -78,8 +78,8 @@ void openDoor()
   // it means the door is still open
   // so it can't lock (servo state 0)
   do {
-    hallSensorValue = digitalRead(hallSensorPin)
-  } while (hallSensorValue == HIGH)
+    hallSensorValue = digitalRead(hallSensorPin);
+  } while (hallSensorValue == HIGH);
 
   servo.write(0);
   digitalWrite(ledVerde, LOW);
