@@ -9,10 +9,10 @@ aproximar da realidade os ataques cibernéticos que ocorrem recorrentemente, bas
 
 ## Tabela de Conteúdos
 * [Sobre](#arduino-doorlock)
-* [Tabela de Conteúdos](#tabela-de-conteudos)
-* [Pré-Requisitos](#pre-requisitos)
+* [Tabela de Conteúdos](#tabela-de-conteúdos)
+* [Pré-Requisitos](#pré-requisitos)
 * [Modo de Uso](#modo-de-uso)
-* [Testes de Invasão](#testes-de-invasao)
+* [Testes de Invasão](#testes-de-invasão)
 * [Autores](#autores)
 
 ## Pré-Requisitos
