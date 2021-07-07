@@ -4,7 +4,7 @@
 O projeto apresentado no presente repositório se trata de um sistema de controle de acesso físico utilizando o microcontrolador Arduino. Dessa forma, o protótipo final simula o funcionamento de um mecanismo para abertura de portas de forma eletrônica, controlada via Cartão RFID e WiFi, movimentando um Servo Motor caso o acesso seja bem-sucedido.
 
 Com o objetivo de analisar e evidenciar os riscos encontrados em implementações inseguras de redes e dispositivos IoT, demonstram-se, nesse projeto, testes de segurança no protótipo desenvolvido, simulando ataques reais de forma a exemplificar e
-aproximar da realidade os ataques cibernéticos que ocorrem recorrentemente, baseando-os, principalmente, no relatório da “OWASP Top 10 IoT”, de 2018.
+aproximar da realidade os ataques cibernéticos que ocorrem recorrentemente, baseando-os, principalmente, no relatório da [“OWASP Top 10 IoT”](https://owasp.org/www-pdf-archive/OWASP-IoT-Top-10-2018-final.pdf), de 2018.
 
 
 ## Tabela de Conteúdos
