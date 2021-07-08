@@ -71,8 +71,11 @@ void setupEthernet()
 void openDoor()
 {
   digitalWrite(ledVerde, HIGH);
-  servo.write(90);
-  delay(5000);
+  
+  for (int i = 0; i <= 90; i++) {
+    servo.write(i);
+    delay(5);
+  }
 
   // while the magnetic field is not detected (hall state HIGH)
   // it means the door is still open
@@ -81,7 +84,12 @@ void openDoor()
     hallSensorValue = digitalRead(hallSensorPin);
   } while (hallSensorValue == HIGH);
 
-  servo.write(0);
+  
+  for (int i = 90; i >= 0; i--) {
+    servo.write(i);
+    delay(5);
+  }
+  
   digitalWrite(ledVerde, LOW);
 }
 
