@@ -95,6 +95,17 @@ da senha da rede WiFi na qual o dispositivo está conectado, descrevendo os risc
 
 Por meio da utilização do script [Automap](https://github.com/iuribpmoro/Automap) que realizam o reconhecimento, scanning e enumeração da rede, descobre-se, por fim, como operar a fechadura por meio de requisições web, finalizando o processo de ataque.
 
+### RFID Hacking
+O clonador RFID apresentado realiza a cópia do segundo bloco de conteúdo de uma tag para outra. 
+Para clonar o conteúdo da tag RFID, siga os passos abaixo:
+
+- Aperte o botão preto do clonador RFID. 
+  - O LED amarelo ficará ativo;
+- Aproxime o cartão a ser clonado para realizar a leitura do conteúdo;
+- Aperte o botão vermelho do clonador RFID;
+  - O LED verde ficará ativo;
+- Aproxime o seu cartão para realizar a escrita do conteúdo;
+
 ### WiFi Hacking
 #### Setup da Interface
 - Iniciar modo de monitoramento da interface WiFi:
