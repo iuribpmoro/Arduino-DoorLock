@@ -96,6 +96,12 @@ da senha da rede WiFi na qual o dispositivo está conectado, descrevendo os risc
 Por meio da utilização do script [Automap](https://github.com/iuribpmoro/Automap) que realizam o reconhecimento, scanning e enumeração da rede, descobre-se, por fim, como operar a fechadura por meio de requisições web, finalizando o processo de ataque.
 
 ### RFID Hacking
+Nesse repositório também está disponível o [código](https://github.com/iuribpmoro/Arduino-DoorLock/blob/main/RFIDCloner/RFIDCloner.ino) e o sketch de montagem do clonador de RFID.
+<details>
+  <summary>Clique para visualizar o sketch</summary>
+  <img alt="RFID Cloner Sketch" src="https://github.com/iuribpmoro/Arduino-DoorLock/blob/main/Sketch/rfid_cloner_sketch.png" height="700px">
+</details>
+
 O clonador RFID apresentado realiza a cópia do segundo bloco de conteúdo de uma tag para outra. 
 Para clonar o conteúdo da tag RFID, siga os passos abaixo:
 
