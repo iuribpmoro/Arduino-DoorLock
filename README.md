@@ -41,7 +41,7 @@ Lembrando que o Ethernet Shield deve ser conectado sobre o Arduino.
 </details>
 
 ### Instalação
-Para anexar o protótipo em uma maquete ou mesmo em uma porta, deve-se seguinte a estrutura:
+Para anexar o protótipo em uma maquete ou mesmo em uma porta, deve-se seguir a estrutura:
 [instalacao-doorlock.pdf](https://github.com/iuribpmoro/Arduino-DoorLock/files/6788697/instalacao-doorlock.pdf)
 
 ### Softwares
