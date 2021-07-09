@@ -124,8 +124,8 @@ sudo aireplay-ng -0 2 -a <BSSID_DA_REDE> -c <MAC_DO_DISPOSITIVO>
 ```bash
 sudo aircrack-ng <ARQUIVO>.cap -w <WORDLIST>
 ```
-## Scanneando a Rede
-### Instalando o Automap
+### Scanneando a Rede
+#### Instalando o Automap
 - Baixe a ferramenta do github:
 ```bash
 git clone https://github.com/iuribpmoro/Automap
@@ -134,7 +134,7 @@ git clone https://github.com/iuribpmoro/Automap
 ```bash
 ./install.sh
 ```
-### Rodando o Automap
+#### Rodando o Automap
 - Rode o scan na rede e em todos os hosts conectados:
 ```bash
 ./Automap.sh network <REDE> <WORDLIST_DE_DIRETORIOS> -n <NUMERO_DE_PORTAS>
