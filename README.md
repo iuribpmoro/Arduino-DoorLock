@@ -10,15 +10,15 @@ A premissa ao simular - o que poderia ser o controle de acesso físico de um amb
 * [Sobre](#arduino-doorlock)
 * [Tabela de Conteúdos](#tabela-de-conteúdos)
 * [Pré-Requisitos](#pré-requisitos)
-* [Modo de Uso](#modo-de-uso)
+* [User Story](#user-story)
 * [Testes de Invasão](#testes-de-invasão)
 * [Autores](#autores)
 
 ## Pré-Requisitos
-Nesta seção são apresentados todos os pré requisitos necessários para reproduzir o protótipo do [DoorLock](https://github.com/iuribpmoro/Arduino-DoorLock)
+Nesta seção são apresentados todos os pré-requisitos necessários para reproduzir o protótipo do [DoorLock](https://github.com/iuribpmoro/Arduino-DoorLock).
 
 ### Materiais
-Para montagem desse projeto serão necessários os seguintes componentes:
+Para montagem deste projeto serão necessários os seguintes componentes:
 * [Arduino UNO](https://www.filipeflop.com/produto/placa-uno-r3-cabo-usb-para-arduino/)
 * [Protoboard 400 pontos](https://www.filipeflop.com/produto/protoboard-400-pontos/#tab-description)
 * [Servo Motor](https://www.filipeflop.com/produto/micro-servo-sg92r-9g-towerpro/)
@@ -32,22 +32,60 @@ Para montagem desse projeto serão necessários os seguintes componentes:
 * Jumpers
 
 ### Montagem
-A montagem desde projeto segue o sketch de demonstração. Lembrando que o Ethernet Shield deve ser conectado sobre o Arduino.
+A montagem deste projeto segue o sketch de demonstração.
+Lembrando que o Ethernet Shield deve ser conectado sobre o Arduino.
+
 <details>
   <summary>Clique para visualizar o sketch</summary>
   <img alt="DoorLock Sketch" src="https://github.com/iuribpmoro/Arduino-DoorLock/blob/main/Sketch/door_lock_sketch.png" height="700px">
 </details>
 
+### Instalação
+Para anexar o protótipo em uma maquete ou mesmo em uma porta, deve-se seguinte a estrutura:
+[instalacao-doorlock.pdf](https://github.com/iuribpmoro/Arduino-DoorLock/files/6788697/instalacao-doorlock.pdf)
+
 ### Softwares
-Os pré requisitos a nível de software reproduzir a aplicação:
+Os pré-requisitos a nível de software para reproduzir a aplicação:
 * [Arduino IDE](https://www.arduino.cc/en/software)
 * [Biblioteca](https://www.arduino.cc/reference/en/libraries/mfrc522/) (Passo a passo: [Adicionar bibliotecas na IDE do arduino](https://www.robocore.net/tutoriais/adicionando-bibliotecas-na-ide-arduino))
 * [Código-fonte do DoorLock](https://github.com/iuribpmoro/Arduino-DoorLock/blob/main/DoorLock/DoorLock.ino)
 
 Por fim, o arduino deve ser conectado via USB com o computador, o código deve ser carregado na placa e o ambiente estará pronto.
-Caso desejar, o mesmo poderá ser anexado a uma maquete.
 
-## Modo de Uso
+## User Story
+
+### Cartão
+**Eu como** pessoa autorizada a acessar um determinado local
+
+**Quero que** consiga abrir a porta deste local aproximando meu cartão RFID do leitor<br>
+**Ou** consiga abrir a porta deste local através da wifi, acessando uma determinada rota que faz uma requisição de abertura da porta
+**e** só tranque novamente quando após eu fechá-la
+**ou** caso eu não abra, deverá se trancar novamente
+
+**Para** não utilizar chaves<br>
+**e** poder manipular a minha fechadura a distância
+
+### Conversa
+O servo deve girar em 90º quando:
+- O conteúdo lido no card RFID estiver correspondente
+- A requisição WiFi enviada for para a rota /b
+
+O controle para saber se a porta está aberta ou fechada de ser feita pelo Sensor Magnético.<br>
+Se estiver perto do imã que está na porta, significa que está fechada. Senão, está aberta.
+
+### Confirmação
+
+Cenário 01 - Abrindo a porta - <Válido>: 
+1.  **Dado que** possuo um cartão RFID autorizado ou conheço a requisição WiFi correta a ser enviada
+2.  **Quando** aproximar meu cartão da leitora ou enviar uma requisição WiFi correta
+3.  **Então** o LED verde acenderá, a fechadura será destrancada e eu poderei abrir a porta dentro dos próximos 5 segundos.
+4.  **Caso 1:** Caso eu não abra a porta, a fechadura irá trancar novamente e o LED verde será apagado
+5.  **Caso 2:** Caso eu abra a porta, a fechadura só vai trancar 5 segundos após eu fechar, assim como o LED verde se apagará
+
+Cenário 02 - Abrindo a porta - <Inválido>: 
+1.  **Dado que** não possuo um cartão RFID autorizado, nem conheço a requisição WiFi correta a ser enviada
+2.  **Quando** aproximar meu cartão da leitora ou enviar uma requisição WiFi incorreta ou apenas tentar abrir a porta
+3.  **Então** o LED vermelho acenderá e a fechadura permanecerá trancada.
 
 ## Testes de Invasão
 
